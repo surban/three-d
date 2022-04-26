@@ -4,7 +4,10 @@ fn main() {
     let viewport = Viewport::new_at_origo(1280, 720);
 
     // Create a headless graphics context
-    let context = Context::new().unwrap();
+    let context = Context::new(WindowSettings {
+        ..Default::default()
+    })
+    .unwrap();
 
     // Create a camera
     let camera = Camera::new_perspective(
