@@ -29,6 +29,11 @@ jobs:
         with:
           command: build
 
+      - name: Build headless
+        uses: actions-rs/cargo@v1
+        with:
+          command: build --example headless
+
       - name: Run
         uses: actions-rs/cargo@v1
         with:
