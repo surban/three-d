@@ -4,6 +4,7 @@ on: [ push, pull_request ]
 
 env:
   CARGO_TERM_COLOR: always
+  RUST_BACKTRACE: 1
 
 jobs:
   desktop:
@@ -66,13 +67,14 @@ jobs:
               echo "::endgroup::"
             fi
           done    
-          
+
   examples:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: openrndr/setup-opengl@v1.1
-
+      - run: xvfb-run glxinfo
+      
       - name: Install Rust Toolchain
         uses: actions-rs/toolchain@v1
         with:
