@@ -10,8 +10,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ macos-latest ]
-        rust: [ stable ]
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        rust: [ stable, nightly ]
 
     steps:
       - uses: actions/checkout@v2
@@ -24,22 +24,10 @@ jobs:
           components: rustfmt, clippy
           override: true
 
-      - name: Build
+      - name: Check
         uses: actions-rs/cargo@v1
         with:
-          command: build
-
-      - name: Build headless
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --example headless
-
-      - name: Run
-        uses: actions-rs/cargo@v1
-        with:
-          command: run 
-          args: --example headless
+          command: check
 
       - name: Rustfmt
         uses: actions-rs/cargo@v1
@@ -52,6 +40,30 @@ jobs:
         with:
           command: test
 
+run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: openrndr/setup-opengl@v1.1
+
+      - name: Install Rust Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Build headless
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --example headless
+
+      - name: Run headless
+        uses: actions-rs/cargo@v1
+        with:
+          command: run 
+          args: --example headless
   web:
     runs-on: ubuntu-latest
     steps:
