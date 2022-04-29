@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions-rs/cargo@v1
       - run: sudo apt-get update && sudo apt-get install -y xorg-dev mesa-utils xvfb
       - run: xvfb-run glxinfo
 
@@ -22,15 +23,6 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Build headless
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --example headless
-
-      - name: Run headless
-        uses: actions-rs/cargo@v1
-        with:
-          command: DISPLAY=:0 xvfb-run -s '-screen 0 1024x768x24' run 
-          args: --example headless
+      - run: cargo build --example headless
+      - run: DISPLAY=:0 xvfb-run -s '-screen 0 1024x768x24' cargo run --example headless
 
