@@ -65,5 +65,30 @@ jobs:
               popd
               echo "::endgroup::"
             fi
-          done
+          done    
+          
+  examples:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: openrndr/setup-opengl@v1.1
+
+      - name: Install Rust Toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+
+      - name: Build headless
+        uses: actions-rs/cargo@v1
+        with:
+          command: build
+          args: --example headless
+
+      - name: Run headless
+        uses: actions-rs/cargo@v1
+        with:
+          command: run 
+          args: --example headless
 
