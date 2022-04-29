@@ -32,12 +32,14 @@ jobs:
       - name: Build headless
         uses: actions-rs/cargo@v1
         with:
-          command: build --example headless
+          command: build
+          args: --example headless
 
       - name: Run
         uses: actions-rs/cargo@v1
         with:
-          command: run --example headless
+          command: run 
+          args: --example headless
 
       - name: Rustfmt
         uses: actions-rs/cargo@v1
