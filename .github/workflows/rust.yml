@@ -30,7 +30,6 @@ jobs:
 
       - name: Run headless
         uses: actions-rs/cargo@v1
-        with:
-          command: run 
-          args: --example headless
+        run: DISPLAY=:0 xvfb-run -s '-screen 0 1024x768x24' cargo run --example headless
+        
 
