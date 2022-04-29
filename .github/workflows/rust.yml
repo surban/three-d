@@ -24,10 +24,15 @@ jobs:
           components: rustfmt, clippy
           override: true
 
-      - name: Check
+      - name: Build
         uses: actions-rs/cargo@v1
         with:
-          command: check
+          command: build
+
+      - name: Run
+        uses: actions-rs/cargo@v1
+        with:
+          command: run --example headless
 
       - name: Rustfmt
         uses: actions-rs/cargo@v1
