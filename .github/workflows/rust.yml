@@ -5,6 +5,7 @@ on: [ push, pull_request ]
 env:
   CARGO_TERM_COLOR: always
   RUST_BACKTRACE: 1
+  THREE_D_EXIT: 300
 
 jobs:
 
@@ -23,5 +24,6 @@ jobs:
           toolchain: stable
           override: true
 
+      - run: DISPLAY=:0 xvfb-run -s '-screen 0 1024x768x24' cargo run --example triangle --no-default-features --features "glutin-window"
       - run: DISPLAY=:0 xvfb-run -s '-screen 0 1024x768x24' cargo run --example headless --no-default-features --features "glutin-window image-io"
 
