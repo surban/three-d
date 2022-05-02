@@ -1,8 +1,6 @@
 use glutin::dpi::PhysicalSize;
 use glutin::event_loop::EventLoop;
-use glutin::{
-    Api, ContextBuilder, ContextCurrentState, CreationError, GlProfile, GlRequest, NotCurrent,
-};
+use glutin::{ContextBuilder, ContextCurrentState, CreationError, NotCurrent};
 
 use crate::Context;
 use crate::ThreeDResult;
@@ -13,9 +11,7 @@ impl Context {
     ///
     ///
     pub fn new() -> ThreeDResult<Self> {
-        let cb = ContextBuilder::new()
-            .with_gl_profile(GlProfile::Core)
-            .with_gl(GlRequest::Specific(Api::OpenGlEs, (3, 0)));
+        let cb = ContextBuilder::new();
         let (headless_context, _el) = build_context(cb).unwrap();
         let headless_context = unsafe { headless_context.make_current().unwrap() };
         let mut c = Self::from_gl_context(std::rc::Rc::new(unsafe {
