@@ -11,7 +11,13 @@ impl Context {
     /// Creates a new headless graphics context (a graphics context that is not associated with any window).
     ///
     ///
-    pub fn new(settings: WindowSettings) -> ThreeDResult<(Self, EventLoop<()>)> {
+    pub fn new(
+        settings: WindowSettings,
+    ) -> ThreeDResult<(
+        Self,
+        EventLoop<()>,
+        glutin::Context<glutin::PossiblyCurrent>,
+    )> {
         if settings.multisamples > 0 && !settings.multisamples.is_power_of_two() {
             Err(WindowError::InvalidNumberOfMSAASamples)?;
         }
@@ -21,11 +27,11 @@ impl Context {
             .with_multisampling(settings.multisamples as u16)
             .with_vsync(settings.vsync);
         let (headless_context, el) = build_context(cb).unwrap();
-        let current_context = unsafe { headless_context.make_current().unwrap() };
+        let headless_context = unsafe { headless_context.make_current().unwrap() };
 
         Self::from_gl_context(std::rc::Rc::new(unsafe {
             crate::context::Context::from_loader_function(|s| {
-                current_context.get_proc_address(s) as *const _
+                headless_context.get_proc_address(s) as *const _
             })
         }))
         .map(|c| {
@@ -35,7 +41,7 @@ impl Context {
             }
             c
         })
-        .map(|c| (c, el))
+        .map(|c| (c, el, headless_context))
     }
 }
 
