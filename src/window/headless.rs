@@ -72,12 +72,6 @@ fn build_context<T1: ContextCurrentState>(
     use glutin::platform::unix::EventLoopExtUnix;
     let el = EventLoopExtUnix::new_any_thread();
 
-    println!("Trying surfaceless");
-    let err1 = match build_context_surfaceless(cb.clone(), &el) {
-        Ok(ctx) => return Ok((ctx, el)),
-        Err(err) => err,
-    };
-
     println!("Trying headless");
     let err2 = match build_context_headless(cb.clone(), &el) {
         Ok(ctx) => return Ok((ctx, el)),
@@ -86,6 +80,12 @@ fn build_context<T1: ContextCurrentState>(
 
     println!("Trying osmesa");
     let err3 = match build_context_osmesa(cb.clone()) {
+        Ok(ctx) => return Ok((ctx, el)),
+        Err(err) => err,
+    };
+
+    println!("Trying surfaceless");
+    let err1 = match build_context_surfaceless(cb.clone(), &el) {
         Ok(ctx) => return Ok((ctx, el)),
         Err(err) => err,
     };
