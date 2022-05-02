@@ -4,7 +4,7 @@ fn main() {
     let viewport = Viewport::new_at_origo(1280, 720);
 
     // Create a headless graphics context
-    let (context, el, _c) = Context::new(WindowSettings {
+    let (context, _c) = Context::new(WindowSettings {
         ..Default::default()
     })
     .unwrap();
@@ -96,11 +96,4 @@ fn main() {
         )
         .unwrap();
     }
-
-    el.run(move |event, _, control_flow| match event {
-        _ => {
-            println!("HA");
-            *control_flow = glutin::event_loop::ControlFlow::Exit;
-        }
-    });
 }

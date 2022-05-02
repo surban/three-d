@@ -13,11 +13,7 @@ impl Context {
     ///
     pub fn new(
         settings: WindowSettings,
-    ) -> ThreeDResult<(
-        Self,
-        EventLoop<()>,
-        glutin::Context<glutin::PossiblyCurrent>,
-    )> {
+    ) -> ThreeDResult<(Self, glutin::Context<glutin::PossiblyCurrent>)> {
         if settings.multisamples > 0 && !settings.multisamples.is_power_of_two() {
             Err(WindowError::InvalidNumberOfMSAASamples)?;
         }
@@ -26,7 +22,7 @@ impl Context {
             .with_gl_profile(glutin::GlProfile::Core)
             .with_multisampling(settings.multisamples as u16)
             .with_vsync(settings.vsync);
-        let (headless_context, el) = build_context(cb).unwrap();
+        let (headless_context, _el) = build_context(cb).unwrap();
         let headless_context = unsafe { headless_context.make_current().unwrap() };
 
         Self::from_gl_context(std::rc::Rc::new(unsafe {
@@ -41,7 +37,7 @@ impl Context {
             }
             c
         })
-        .map(|c| (c, el, headless_context))
+        .map(|c| (c, headless_context))
     }
 }
 
