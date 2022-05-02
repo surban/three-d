@@ -30,13 +30,6 @@ impl Context {
                 headless_context.get_proc_address(s) as *const _
             })
         }))
-        .map(|c| {
-            unsafe {
-                use crate::context::*;
-                dbg!(c.create_buffer().unwrap());
-            }
-            c
-        })
         .map(|c| (c, headless_context))
     }
 }

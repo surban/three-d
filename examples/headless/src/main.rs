@@ -9,11 +9,6 @@ fn main() {
     })
     .unwrap();
 
-    unsafe {
-        use three_d::context::*;
-        dbg!(context.create_buffer().unwrap());
-    }
-
     // Create a camera
     let camera = Camera::new_perspective(
         &context,
