@@ -4,7 +4,7 @@ fn main() {
     let viewport = Viewport::new_at_origo(1280, 720);
 
     // Create a headless graphics context
-    let (context, _c) = Context::new(WindowSettings {
+    let context = Context::new(WindowSettings {
         ..Default::default()
     })
     .unwrap();
