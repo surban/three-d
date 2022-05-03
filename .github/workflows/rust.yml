@@ -22,4 +22,4 @@ jobs:
           toolchain: stable
           override: true
 
-      - run: cargo run --example headless --no-default-features --features "glutin-window image-io"
+      - run: xvfb-run cargo run --example headless --no-default-features --features "glutin-window image-io"
