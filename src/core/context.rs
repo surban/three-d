@@ -29,7 +29,7 @@ impl Context {
         #[cfg(not(target_arch = "wasm32"))]
         unsafe {
             // Enable seamless cube map textures
-            context.enable(crate::context::TEXTURE_CUBE_MAP_SEAMLESS);
+            //context.enable(crate::context::TEXTURE_CUBE_MAP_SEAMLESS);
             context.pixel_store_i32(crate::context::UNPACK_ALIGNMENT, 1);
             context.pixel_store_i32(crate::context::PACK_ALIGNMENT, 1);
         };
